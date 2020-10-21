@@ -1,6 +1,5 @@
 package com.wanari.webpush
 
-import java.math.BigInteger
 import java.security.interfaces.{ECPrivateKey, ECPublicKey}
 import java.security.{KeyFactory, PrivateKey, PublicKey}
 import java.util.Base64
@@ -9,6 +8,7 @@ import org.apache.commons.codec.binary.Hex.decodeHex
 import org.bouncycastle.jce.ECNamedCurveTable
 import org.bouncycastle.jce.provider.BouncyCastleProvider
 import org.bouncycastle.jce.spec.{ECNamedCurveParameterSpec, ECPrivateKeySpec, ECPublicKeySpec}
+import org.bouncycastle.util.BigIntegers
 
 object Utils {
 
@@ -29,7 +29,9 @@ object Utils {
   def loadPrivateKey(encodedPrivateKey: String): PrivateKey = {
     KeyFactory
       .getInstance("ECDH", BouncyCastleProvider.PROVIDER_NAME)
-      .generatePrivate(new ECPrivateKeySpec(new BigInteger(base64Decode(encodedPrivateKey)), ECNamedCurveTable.getParameterSpec("prime256v1")))
+      .generatePrivate(
+        new ECPrivateKeySpec(BigIntegers.fromUnsignedByteArray(base64Decode(encodedPrivateKey)), ECNamedCurveTable.getParameterSpec("prime256v1")),
+      )
   }
 
   def toJsonString(json: Map[String, String]): String = {
