@@ -1,18 +1,13 @@
-
 name := "web-push"
 
-organization := "com.zivver"
+version := "1.0"
 
-version := "0.2.1"
-
-scalaVersion := "2.12.1"
-
-crossScalaVersions := Seq("2.11.8", "2.12.1")
+scalaVersion := "2.13.3"
 
 libraryDependencies ++= Seq(
-  "com.pauldijou" %% "jwt-core" % "0.10.0",
-  "org.apache.httpcomponents" % "fluent-hc" % "4.5.2",
-  "org.bouncycastle" % "bcprov-jdk15on" % "1.55"
+  "com.pauldijou"             %% "jwt-core"      % "4.3.0",
+  "org.apache.httpcomponents" % "fluent-hc"      % "4.5.13",
+  "org.bouncycastle"          % "bcprov-jdk15on" % "1.66",
 )
 
 publishTo := {
@@ -27,10 +22,12 @@ publishMavenStyle := true
 
 publishArtifact in Test := false
 
-pomIncludeRepository := { _ => false }
+pomIncludeRepository := { _ =>
+  false
+}
 
-pomExtra := (
-  <url>https://github.com/zivver/web-push</url>
+pomExtra :=
+  <url>https://github.com/TeamWanari/web-push</url>
     <licenses>
       <license>
         <name>MIT License</name>
@@ -39,14 +36,13 @@ pomExtra := (
       </license>
     </licenses>
     <scm>
-      <url>git@github.com:zivver/web-push.git</url>
-      <connection>scm:git:git@github.com:zivver/web-push.git</connection>
+      <url>git@github.com:TeamWanari/web-push.git</url>
+      <connection>scm:git:git@github.com:TeamWanari/web-push.git</connection>
     </scm>
     <developers>
       <developer>
-        <id>zivver</id>
-        <name>Zivver</name>
-        <url>https://www.zivver.com</url>
+        <id>wanari</id>
+        <name>Wanari Kft.</name>
+        <url>https://www.wanari.com</url>
       </developer>
     </developers>
-  )
