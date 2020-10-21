@@ -1,9 +1,9 @@
-package com.zivver.webpush
+package com.wanari.webpush
 
 import java.security.interfaces.{ECPrivateKey, ECPublicKey}
 import java.util.Base64
 
-import com.zivver.webpush.Encryption.Encrypted
+import com.wanari.webpush.Encryption.Encrypted
 import org.apache.http.HttpResponse
 import org.apache.http.client.HttpClient
 import org.apache.http.client.methods.HttpPost
@@ -20,8 +20,8 @@ import scala.concurrent.duration._
   */
 case class PushService(publicKey: ECPublicKey, privateKey: ECPrivateKey, subject: String, exp: FiniteDuration = 12.hours) {
 
-  private val base64encoder = Base64.getUrlEncoder
-  private val defaultTtl: Int = 2419200
+  private val base64encoder          = Base64.getUrlEncoder
+  private val defaultTtl: Int        = 2419200
   private val httpClient: HttpClient = HttpClients.createDefault
 
   /**
@@ -78,35 +78,44 @@ case class PushService(publicKey: ECPublicKey, privateKey: ECPrivateKey, subject
 
     val httpPost = new HttpPost(subscription.endpoint)
 
-    payload.fold(vapidHeaders(subscription.origin, ttl)) {
-      p =>
+    payload
+      .fold(vapidHeaders(subscription.origin, ttl)) { p =>
         val (encryptionHeaders, content) = handleEncryption(p, subscription)
         httpPost.setEntity(new ByteArrayEntity(content))
         vapidHeaders(subscription.origin, ttl) ++ encryptionHeaders
-    }.foreach { case (k, v) => httpPost.addHeader(new BasicHeader(k, v)) }
+      }
+      .foreach { case (k, v) => httpPost.addHeader(new BasicHeader(k, v)) }
     httpClient.execute(httpPost)
   }
 
   private def vapidHeaders(origin: String, ttl: Int): Map[String, String] = {
     Map(
       "TTL" -> ttl.toString,
-      "Authorization" -> (
-        "WebPush " + Jwt.encode(Utils.toJsonString(Map(
-          "aud" -> origin,
-          "exp" -> ((System.currentTimeMillis() + exp.toMillis) / 1000).toString,
-          "sub" -> subject
-        )), privateKey, ES256)),
-      "Crypto-Key" -> ("p256ecdsa=" + publicKeyToBase64)
+      "Authorization" -> ("WebPush " + Jwt.encode(
+        Utils.toJsonString(
+          Map(
+            "aud" -> origin,
+            "exp" -> ((System.currentTimeMillis() + exp.toMillis) / 1000).toString,
+            "sub" -> subject,
+          ),
+        ),
+        privateKey,
+        ES256,
+      )),
+      "Crypto-Key" -> ("p256ecdsa=" + publicKeyToBase64),
     )
   }
 
   private def handleEncryption(payload: Array[Byte], subscription: Subscription): (Map[String, String], Array[Byte]) = {
     val encrypted: Encrypted = Encryption.encrypt(payload, subscription.publicKey, subscription.auth)
-    (Map(
-      "Content-Encoding" -> "aesgcm",
-      "Encryption" -> ("keyid=p256dh;salt=" + base64encoder.withoutPadding().encodeToString(encrypted.salt)),
-      "Crypto-Key" -> ("keyid=p256dh;dh=" + base64encoder.encodeToString(Utils.publicKeyToBytes(encrypted.publicKey.asInstanceOf[ECPublicKey])) +
-        ";p256ecdsa=" + base64encoder.withoutPadding().encodeToString(Utils.publicKeyToBytes(publicKey.asInstanceOf[ECPublicKey])))
-    ), encrypted.ciphertext)
+    (
+      Map(
+        "Content-Encoding" -> "aesgcm",
+        "Encryption"       -> ("keyid=p256dh;salt=" + base64encoder.withoutPadding().encodeToString(encrypted.salt)),
+        "Crypto-Key" -> ("keyid=p256dh;dh=" + base64encoder.encodeToString(Utils.publicKeyToBytes(encrypted.publicKey.asInstanceOf[ECPublicKey])) +
+          ";p256ecdsa=" + base64encoder.withoutPadding().encodeToString(Utils.publicKeyToBytes(publicKey.asInstanceOf[ECPublicKey]))),
+      ),
+      encrypted.ciphertext,
+    )
   }
 }

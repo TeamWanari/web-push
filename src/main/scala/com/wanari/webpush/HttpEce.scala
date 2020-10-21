@@ -1,11 +1,11 @@
-package com.zivver.webpush
+package com.wanari.webpush
 
 import java.nio.ByteBuffer
-import java.security._
 import java.security.interfaces.ECPublicKey
-import javax.crypto._
-import javax.crypto.spec.{GCMParameterSpec, SecretKeySpec}
+import java.security.{Key, KeyPair, PublicKey}
 
+import javax.crypto.spec.{GCMParameterSpec, SecretKeySpec}
+import javax.crypto.{Cipher, KeyAgreement}
 import org.bouncycastle.crypto.digests.SHA256Digest
 import org.bouncycastle.crypto.generators.HKDFBytesGenerator
 import org.bouncycastle.crypto.params.HKDFParameters
@@ -24,20 +24,17 @@ object HttpEce {
     cipher.doFinal(buffer)
   }
 
-  //noinspection ScalaStyle
   private def deriveKey(keys: KeyPair, salt: Array[Byte], dh: PublicKey, authSecret: Array[Byte]) = {
     val (secret, context) = deriveDH(dh, keys)
-    val derived = hkdfExpand(secret, authSecret, buildInfo("auth", Array.ofDim[Byte](0)), 32)
-    (hkdfExpand(derived, salt, buildInfo("aesgcm", context), 16),
-      hkdfExpand(derived, salt, buildInfo("nonce", context), 12))
+    val derived           = hkdfExpand(secret, authSecret, buildInfo("auth", Array.ofDim[Byte](0)), 32)
+    (hkdfExpand(derived, salt, buildInfo("aesgcm", context), 16), hkdfExpand(derived, salt, buildInfo("nonce", context), 12))
   }
 
   private def deriveDH(publicKey: PublicKey, keys: KeyPair) = {
     val keyAgreement: KeyAgreement = KeyAgreement.getInstance("ECDH")
     keyAgreement.init(keys.getPrivate)
     keyAgreement.doPhase(publicKey, true)
-    (keyAgreement.generateSecret,
-      "P-256".getBytes ++ Array.ofDim[Byte](1) ++ lengthPrefix(publicKey) ++ lengthPrefix(keys.getPublic))
+    (keyAgreement.generateSecret, "P-256".getBytes ++ Array.ofDim[Byte](1) ++ lengthPrefix(publicKey) ++ lengthPrefix(keys.getPublic))
   }
 
   private def lengthPrefix(key: Key): Array[Byte] = {

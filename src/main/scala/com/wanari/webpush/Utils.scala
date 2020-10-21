@@ -1,15 +1,14 @@
-package com.zivver.webpush
+package com.wanari.webpush
 
 import java.math.BigInteger
-import java.security._
 import java.security.interfaces.{ECPrivateKey, ECPublicKey}
+import java.security.{KeyFactory, PrivateKey, PublicKey}
 import java.util.Base64
 
+import org.apache.commons.codec.binary.Hex.decodeHex
 import org.bouncycastle.jce.ECNamedCurveTable
 import org.bouncycastle.jce.provider.BouncyCastleProvider
 import org.bouncycastle.jce.spec.{ECNamedCurveParameterSpec, ECPrivateKeySpec, ECPublicKeySpec}
-import org.apache.commons.codec.binary.Hex.decodeHex
-
 
 object Utils {
 
@@ -22,14 +21,15 @@ object Utils {
 
   def loadPublicKey(encodedPublicKey: String): PublicKey = {
     val ecSpec: ECNamedCurveParameterSpec = ECNamedCurveTable.getParameterSpec("prime256v1")
-    KeyFactory.getInstance("ECDH", BouncyCastleProvider.PROVIDER_NAME)
+    KeyFactory
+      .getInstance("ECDH", BouncyCastleProvider.PROVIDER_NAME)
       .generatePublic(new ECPublicKeySpec(ecSpec.getCurve.decodePoint(base64Decode(encodedPublicKey)), ecSpec))
   }
 
   def loadPrivateKey(encodedPrivateKey: String): PrivateKey = {
-    KeyFactory.getInstance("ECDH", BouncyCastleProvider.PROVIDER_NAME)
-      .generatePrivate(new ECPrivateKeySpec(new BigInteger(base64Decode(encodedPrivateKey)),
-        ECNamedCurveTable.getParameterSpec("prime256v1")))
+    KeyFactory
+      .getInstance("ECDH", BouncyCastleProvider.PROVIDER_NAME)
+      .generatePrivate(new ECPrivateKeySpec(new BigInteger(base64Decode(encodedPrivateKey)), ECNamedCurveTable.getParameterSpec("prime256v1")))
   }
 
   def toJsonString(json: Map[String, String]): String = {
@@ -38,8 +38,8 @@ object Utils {
 
   def publicKeyToBytes(publicKey: ECPublicKey): Array[Byte] = {
     val point = publicKey.getW
-    val x = point.getAffineX.toString(16)
-    val y = point.getAffineY.toString(16)
+    val x     = point.getAffineX.toString(16)
+    val y     = point.getAffineY.toString(16)
 
     val sb = new StringBuilder()
     sb.append("04")

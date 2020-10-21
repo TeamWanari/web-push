@@ -1,4 +1,4 @@
-package com.zivver.webpush
+package com.wanari.webpush
 
 import java.net.{MalformedURLException, URL}
 import java.security.PublicKey
@@ -11,6 +11,6 @@ case class Subscription(endpoint: String, userPublicKey: String, userAuth: Strin
     url.getProtocol + "://" + url.getHost
   }
 
-  def publicKey: PublicKey = Utils.loadPublicKey(userPublicKey)
+  def publicKey: PublicKey   = Utils.loadPublicKey(userPublicKey)
   lazy val auth: Array[Byte] = Utils.base64Decode(userAuth)
 }
