@@ -1,4 +1,4 @@
-package com.zivver.webpush
+package com.wanari.webpush
 
 import java.security.{KeyPairGenerator, PublicKey, SecureRandom}
 
@@ -15,8 +15,8 @@ object Encryption {
 
   def encrypt(buffer: Array[Byte], userPublicKey: PublicKey, userAuth: Array[Byte]): Encrypted = {
     val serverKeys = localCurve.generateKeyPair
-    //noinspection ScalaStyle
-    val salt = SecureRandom.getSeed(16)
+
+    val salt       = SecureRandom.getSeed(16)
     val ciphertext = HttpEce.encrypt(serverKeys, buffer, salt, userPublicKey, userAuth)
     Encrypted(serverKeys.getPublic, salt, ciphertext)
   }
