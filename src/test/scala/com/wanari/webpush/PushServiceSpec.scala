@@ -1,7 +1,6 @@
 package com.wanari.webpush
 
 import java.security.Security
-import java.security.interfaces.{ECPrivateKey, ECPublicKey}
 
 import com.github.tomakehurst.wiremock.client.WireMock._
 import com.wanari.webpush.testutil.TestBase
@@ -17,8 +16,8 @@ class PushServiceSpec extends TestBase {
     val pubKey: String  = "BEmOvl1rng1WyOafMUiSBSIuO3LIVvrfmbBXn02vLqJBe27zKqB5L0EnJm78go-MJP2oxJowhW1ODKX5QhXb2Bo"
     val privKey: String = "cmSKEnl9pW3ofN9xd0HdBE-tExtWSle4K5XWWIum5oo"
     val service: PushService = PushService(
-      Utils.loadPublicKey(pubKey).asInstanceOf[ECPublicKey],
-      Utils.loadPrivateKey(privKey).asInstanceOf[ECPrivateKey],
+      Utils.loadPublicKey(pubKey),
+      Utils.loadPrivateKey(privKey),
       "Subject",
     )
   }
