@@ -17,10 +17,12 @@ libraryDependencies ++= {
     "com.typesafe.akka"         %% "akka-stream-testkit" % akkaV % Test,
     "com.typesafe.akka"         %% "akka-http"           % akkaHttpV,
     "com.typesafe.akka"         %% "akka-http-testkit"   % akkaHttpV % Test,
+    "org.scalatest"             %% "scalatest"           % "3.3.0-SNAP2" % Test,
+    "com.github.tomakehurst"    % "wiremock"             % "2.27.2" % Test,
   )
 }
 
-addCommandAlias("check", "fmtCheck test stage")
+addCommandAlias("check", "fmtCheck test")
 addCommandAlias("fmtCheck", "all scalafmtSbtCheck scalafmtCheck test:scalafmtCheck")
 addCommandAlias("fmt", "all scalafmtSbt scalafmt test:scalafmt")
 
