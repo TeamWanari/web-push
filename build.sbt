@@ -4,11 +4,27 @@ version := "1.0"
 
 scalaVersion := "2.13.3"
 
-libraryDependencies ++= Seq(
-  "com.pauldijou"             %% "jwt-core"      % "4.3.0",
-  "org.apache.httpcomponents" % "fluent-hc"      % "4.5.13",
-  "org.bouncycastle"          % "bcprov-jdk15on" % "1.66",
-)
+libraryDependencies ++= {
+  val akkaV     = "2.6.10"
+  val akkaHttpV = "10.2.1"
+
+  Seq(
+    "com.pauldijou"             %% "jwt-core"            % "4.3.0",
+    "org.apache.httpcomponents" % "fluent-hc"            % "4.5.13",
+    "org.bouncycastle"          % "bcprov-jdk15on"       % "1.66",
+    "com.typesafe.akka"         %% "akka-actor"          % akkaV,
+    "com.typesafe.akka"         %% "akka-stream"         % akkaV,
+    "com.typesafe.akka"         %% "akka-stream-testkit" % akkaV % Test,
+    "com.typesafe.akka"         %% "akka-http"           % akkaHttpV,
+    "com.typesafe.akka"         %% "akka-http-testkit"   % akkaHttpV % Test,
+    "org.scalatest"             %% "scalatest"           % "3.3.0-SNAP2" % Test,
+    "com.github.tomakehurst"    % "wiremock"             % "2.27.2" % Test,
+  )
+}
+
+addCommandAlias("check", "fmtCheck test")
+addCommandAlias("fmtCheck", "all scalafmtSbtCheck scalafmtCheck test:scalafmtCheck")
+addCommandAlias("fmt", "all scalafmtSbt scalafmt test:scalafmt")
 
 publishTo := {
   val nexus = "https://oss.sonatype.org/"

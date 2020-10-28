@@ -1,14 +1,14 @@
 package com.wanari.webpush
 
-import java.math.BigInteger
+import java.security.KeyFactory
 import java.security.interfaces.{ECPrivateKey, ECPublicKey}
-import java.security.{KeyFactory, PrivateKey, PublicKey}
 import java.util.Base64
 
 import org.apache.commons.codec.binary.Hex.decodeHex
 import org.bouncycastle.jce.ECNamedCurveTable
 import org.bouncycastle.jce.provider.BouncyCastleProvider
 import org.bouncycastle.jce.spec.{ECNamedCurveParameterSpec, ECPrivateKeySpec, ECPublicKeySpec}
+import org.bouncycastle.util.BigIntegers
 
 object Utils {
 
@@ -19,17 +19,21 @@ object Utils {
     else Base64.getUrlDecoder.decode(base64Encoded)
   }
 
-  def loadPublicKey(encodedPublicKey: String): PublicKey = {
+  def loadPublicKey(encodedPublicKey: String): ECPublicKey = {
     val ecSpec: ECNamedCurveParameterSpec = ECNamedCurveTable.getParameterSpec("prime256v1")
     KeyFactory
       .getInstance("ECDH", BouncyCastleProvider.PROVIDER_NAME)
       .generatePublic(new ECPublicKeySpec(ecSpec.getCurve.decodePoint(base64Decode(encodedPublicKey)), ecSpec))
+      .asInstanceOf[ECPublicKey]
   }
 
-  def loadPrivateKey(encodedPrivateKey: String): PrivateKey = {
+  def loadPrivateKey(encodedPrivateKey: String): ECPrivateKey = {
     KeyFactory
       .getInstance("ECDH", BouncyCastleProvider.PROVIDER_NAME)
-      .generatePrivate(new ECPrivateKeySpec(new BigInteger(base64Decode(encodedPrivateKey)), ECNamedCurveTable.getParameterSpec("prime256v1")))
+      .generatePrivate(
+        new ECPrivateKeySpec(BigIntegers.fromUnsignedByteArray(base64Decode(encodedPrivateKey)), ECNamedCurveTable.getParameterSpec("prime256v1")),
+      )
+      .asInstanceOf[ECPrivateKey]
   }
 
   def toJsonString(json: Map[String, String]): String = {

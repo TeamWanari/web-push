@@ -15,8 +15,8 @@ a GCM API key and VAPID keys.
 
 ```scala
 // Base64 string server public/private key
-private val vapidPublicKey: PublicKey = Utils.loadPublicKey("...server public key...")
-private val vapidPrivateKey: PrivateKey = Utils.loadPrivateKey(...server private key...)
+private val vapidPublicKey: ECPublicKey = Utils.loadPublicKey("...server public key...")
+private val vapidPrivateKey: ECPrivateKey = Utils.loadPrivateKey("...server private key...")
 
 // Initialize pushService with VAPID keys and subscriber (mailto or your application domain)
 val pushService = PushService(vapidPublicKey, vapidPrivateKey, "mailto:your-app@example.com")
