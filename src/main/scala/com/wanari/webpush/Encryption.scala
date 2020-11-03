@@ -9,7 +9,6 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider
   * Encryption object to mange payload ECDH encryption.
   */
 object Encryption {
-
   private val localCurve = KeyPairGenerator.getInstance("ECDH", BouncyCastleProvider.PROVIDER_NAME)
   localCurve.initialize(ECNamedCurveTable.getParameterSpec("prime256v1"))
 
@@ -22,5 +21,4 @@ object Encryption {
   }
 
   case class Encrypted(publicKey: PublicKey, salt: Array[Byte], ciphertext: Array[Byte])
-
 }

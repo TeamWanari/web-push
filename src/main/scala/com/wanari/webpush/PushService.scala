@@ -18,7 +18,6 @@ import scala.concurrent.duration._
   * Push service.
   */
 case class PushService(publicKey: ECPublicKey, privateKey: ECPrivateKey, subject: String, exp: FiniteDuration = 12.hours)(implicit as: ActorSystem) {
-
   protected def httpExt: HttpExt = Http()
   private val base64encoder      = Base64.getUrlEncoder
   private val defaultTtl: Int    = 2419200
