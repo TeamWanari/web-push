@@ -1,7 +1,5 @@
 name := "web-push"
 
-version := "1.0"
-
 scalaVersion := "2.13.3"
 
 libraryDependencies ++= {
@@ -26,7 +24,17 @@ addCommandAlias("check", "fmtCheck test")
 addCommandAlias("fmtCheck", "all scalafmtSbtCheck scalafmtCheck test:scalafmtCheck")
 addCommandAlias("fmt", "all scalafmtSbt scalafmt test:scalafmt")
 
-publishTo := {
+organization in ThisBuild := "com.wanari"
+homepage := Some(url("https://github.com/TeamWanari/web-push"))
+licenses := Seq("MIT" -> url("https://www.wanari.com/licenses/mit-license"))
+
+publishMavenStyle := true
+publishArtifact in Test := false
+pomIncludeRepository := { _ =>
+  false
+}
+
+publishTo in ThisBuild := {
   val nexus = "https://oss.sonatype.org/"
   if (isSnapshot.value)
     Some("snapshots" at nexus + "content/repositories/snapshots")
@@ -34,31 +42,13 @@ publishTo := {
     Some("releases" at nexus + "service/local/staging/deploy/maven2")
 }
 
-publishMavenStyle := true
+scmInfo := Some(
+  ScmInfo(
+    url("https://github.com/TeamWanari/web-push"),
+    "scm:git:git@github.com:TeamWanari/web-push.git"
+  )
+)
 
-publishArtifact in Test := false
-
-pomIncludeRepository := { _ =>
-  false
-}
-
-pomExtra :=
-  <url>https://github.com/TeamWanari/web-push</url>
-    <licenses>
-      <license>
-        <name>MIT License</name>
-        <url>http://www.opensource.org/licenses/mit-license.php</url>
-        <distribution>repo</distribution>
-      </license>
-    </licenses>
-    <scm>
-      <url>git@github.com:TeamWanari/web-push.git</url>
-      <connection>scm:git:git@github.com:TeamWanari/web-push.git</connection>
-    </scm>
-    <developers>
-      <developer>
-        <id>wanari</id>
-        <name>Wanari Kft.</name>
-        <url>https://www.wanari.com</url>
-      </developer>
-    </developers>
+developers := List(
+  Developer("Csabi", "Csaba Pálfi", "csibcsab@wanari.com", url("https://www.wanari.com"))
+)
