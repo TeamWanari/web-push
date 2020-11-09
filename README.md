@@ -4,9 +4,9 @@ Scala library for easy Web Push message sending. This library uses latest VAPID 
 
 # Install
 
-Using SBT.
+Compatible with Scala 2.13+. Using SBT.
 
-    libraryDependencies += "com.wanari" %% "web-push" % "1.0"
+    libraryDependencies += "com.wanari" %% "web-push" % "1.0-alfa"
 
 # Basic Usage
 
