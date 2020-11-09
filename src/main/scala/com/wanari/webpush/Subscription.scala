@@ -4,7 +4,6 @@ import java.net.{MalformedURLException, URL}
 import java.security.PublicKey
 
 case class Subscription(endpoint: String, userPublicKey: String, userAuth: String) {
-
   @throws[MalformedURLException]
   val origin: String = {
     val url: URL = new URL(endpoint)

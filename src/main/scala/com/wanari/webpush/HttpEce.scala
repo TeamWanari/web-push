@@ -15,7 +15,6 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider
   * A simplified implementation of HTTP ECE (Encrypted Content Encoding).
   */
 object HttpEce {
-
   def encrypt(keys: KeyPair, buffer: Array[Byte], salt: Array[Byte], dh: PublicKey, authSecret: Array[Byte]): Array[Byte] = {
     val (key_, nonce_) = deriveKey(keys, salt, dh, authSecret)
     val cipher: Cipher = Cipher.getInstance("AES/GCM/NoPadding", BouncyCastleProvider.PROVIDER_NAME)

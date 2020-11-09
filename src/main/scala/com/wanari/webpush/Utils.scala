@@ -11,7 +11,6 @@ import org.bouncycastle.jce.spec.{ECNamedCurveParameterSpec, ECPrivateKeySpec, E
 import org.bouncycastle.util.BigIntegers
 
 object Utils {
-
   def savePrivateKey(privateKey: ECPrivateKey): Array[Byte] = privateKey.getS.toByteArray
 
   def base64Decode(base64Encoded: String): Array[Byte] = {
@@ -54,5 +53,4 @@ object Utils {
     sb.append(y)
     decodeHex(sb.toString.toCharArray)
   }
-
 }
