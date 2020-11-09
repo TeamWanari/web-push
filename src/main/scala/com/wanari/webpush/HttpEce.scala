@@ -11,8 +11,7 @@ import org.bouncycastle.crypto.generators.HKDFBytesGenerator
 import org.bouncycastle.crypto.params.HKDFParameters
 import org.bouncycastle.jce.provider.BouncyCastleProvider
 
-/**
-  * A simplified implementation of HTTP ECE (Encrypted Content Encoding).
+/** A simplified implementation of HTTP ECE (Encrypted Content Encoding).
   */
 object HttpEce {
   def encrypt(keys: KeyPair, buffer: Array[Byte], salt: Array[Byte], dh: PublicKey, authSecret: Array[Byte]): Array[Byte] = {

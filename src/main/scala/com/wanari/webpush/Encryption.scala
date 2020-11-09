@@ -5,8 +5,7 @@ import java.security.{KeyPairGenerator, PublicKey, SecureRandom}
 import org.bouncycastle.jce.ECNamedCurveTable
 import org.bouncycastle.jce.provider.BouncyCastleProvider
 
-/**
-  * Encryption object to mange payload ECDH encryption.
+/** Encryption object to mange payload ECDH encryption.
   */
 object Encryption {
   private val localCurve = KeyPairGenerator.getInstance("ECDH", BouncyCastleProvider.PROVIDER_NAME)
