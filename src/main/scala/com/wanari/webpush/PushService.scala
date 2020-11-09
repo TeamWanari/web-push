@@ -14,24 +14,21 @@ import pdi.jwt.JwtAlgorithm.ES256
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
-/**
-  * Push service.
+/** Push service.
   */
 case class PushService(publicKey: ECPublicKey, privateKey: ECPrivateKey, subject: String, exp: FiniteDuration = 12.hours)(implicit as: ActorSystem) {
   protected def httpExt: HttpExt = Http()
   private val base64encoder      = Base64.getUrlEncoder
   private val defaultTtl: Int    = 2419200
 
-  /**
-    * Send a data free push notification.
+  /** Send a data free push notification.
     *
     * @param subscription Browser subscription object.
     * @return HttpResponse from push server.
     */
   def send(subscription: Subscription): Future[HttpResponse] = send(subscription, None, defaultTtl)
 
-  /**
-    * Send a data free push notification.
+  /** Send a data free push notification.
     *
     * @param subscription Browser subscription object.
     * @param ttl          Suggestion to the message server for how long it should keep the message
@@ -40,8 +37,7 @@ case class PushService(publicKey: ECPublicKey, privateKey: ECPrivateKey, subject
     */
   def send(subscription: Subscription, ttl: Int): Future[HttpResponse] = send(subscription, None, ttl)
 
-  /**
-    * Sends a data bearing push notification.
+  /** Sends a data bearing push notification.
     *
     * @param subscription Browser subscription object.
     * @param payload      Push notification payload.
@@ -53,9 +49,7 @@ case class PushService(publicKey: ECPublicKey, privateKey: ECPrivateKey, subject
 
   def send(subscription: Subscription, payload: String): Future[HttpResponse] = send(subscription, Some(payload.getBytes), defaultTtl)
 
-  /**
-    *
-    * Sends a data bearing push notification.
+  /** Sends a data bearing push notification.
     *
     * @param subscription Browser subscription object.
     * @param payload      Push notification data as a Byte Array.
@@ -65,8 +59,7 @@ case class PushService(publicKey: ECPublicKey, privateKey: ECPrivateKey, subject
     */
   def send(subscription: Subscription, payload: Array[Byte], ttl: Int = defaultTtl): Future[HttpResponse] = send(subscription, Some(payload), ttl)
 
-  /**
-    * Returns the server public key as a URL safe base64 string.
+  /** Returns the server public key as a URL safe base64 string.
     */
   def publicKeyToBase64: String = {
     base64encoder.withoutPadding().encodeToString(Utils.publicKeyToBytes(publicKey.asInstanceOf[ECPublicKey]))
