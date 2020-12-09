@@ -4,7 +4,7 @@ scalaVersion := "2.13.3"
 
 libraryDependencies ++= {
   val akkaV     = "2.6.10"
-  val akkaHttpV = "10.2.1"
+  val akkaHttpV = "10.2.2"
 
   Seq(
     "com.pauldijou"             %% "jwt-core"            % "4.3.0",
