@@ -15,7 +15,7 @@ libraryDependencies ++= {
     "com.typesafe.akka"         %% "akka-stream-testkit" % akkaV % Test,
     "com.typesafe.akka"         %% "akka-http"           % akkaHttpV,
     "com.typesafe.akka"         %% "akka-http-testkit"   % akkaHttpV % Test,
-    "org.scalatest"             %% "scalatest"           % "3.3.0-SNAP2" % Test,
+    "org.scalatest"             %% "scalatest"           % "3.3.0-SNAP3" % Test,
     "com.github.tomakehurst"    % "wiremock"             % "2.27.2" % Test,
   )
 }
