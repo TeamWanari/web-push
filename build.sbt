@@ -7,7 +7,7 @@ libraryDependencies ++= {
   val akkaHttpV = "10.2.1"
 
   Seq(
-    "com.pauldijou"             %% "jwt-core"            % "4.3.0",
+    "com.pauldijou"             %% "jwt-core"            % "5.0.0",
     "org.apache.httpcomponents" % "fluent-hc"            % "4.5.13",
     "org.bouncycastle"          % "bcprov-jdk15on"       % "1.67",
     "com.typesafe.akka"         %% "akka-actor"          % akkaV,
