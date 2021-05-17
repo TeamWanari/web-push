@@ -1,6 +1,6 @@
 name := "web-push"
 
-scalaVersion := "2.13.3"
+scalaVersion := "2.13.6"
 
 libraryDependencies ++= {
   val akkaV     = "2.6.10"
