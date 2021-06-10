@@ -3,7 +3,7 @@ name := "web-push"
 scalaVersion := "2.13.3"
 
 libraryDependencies ++= {
-  val akkaV     = "2.6.10"
+  val akkaV     = "2.6.15"
   val akkaHttpV = "10.2.1"
 
   Seq(
