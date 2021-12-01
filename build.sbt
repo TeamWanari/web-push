@@ -9,7 +9,7 @@ libraryDependencies ++= {
   Seq(
     "com.pauldijou"             %% "jwt-core"            % "4.3.0",
     "org.apache.httpcomponents" % "fluent-hc"            % "4.5.13",
-    "org.bouncycastle"          % "bcprov-jdk15on"       % "1.67",
+    "org.bouncycastle"          % "bcprov-jdk15on"       % "1.70",
     "com.typesafe.akka"         %% "akka-actor"          % akkaV,
     "com.typesafe.akka"         %% "akka-stream"         % akkaV,
     "com.typesafe.akka"         %% "akka-stream-testkit" % akkaV % Test,
@@ -45,10 +45,10 @@ publishTo in ThisBuild := {
 scmInfo := Some(
   ScmInfo(
     url("https://github.com/TeamWanari/web-push"),
-    "scm:git:git@github.com:TeamWanari/web-push.git"
-  )
+    "scm:git:git@github.com:TeamWanari/web-push.git",
+  ),
 )
 
 developers := List(
-  Developer("Csabi", "Csaba Pálfi", "csibcsab@wanari.com", url("https://www.wanari.com"))
+  Developer("Csabi", "Csaba Pálfi", "csibcsab@wanari.com", url("https://www.wanari.com")),
 )
