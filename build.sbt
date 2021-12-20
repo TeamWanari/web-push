@@ -3,7 +3,7 @@ name := "web-push"
 scalaVersion := "2.13.3"
 
 libraryDependencies ++= {
-  val akkaV     = "2.6.10"
+  val akkaV     = "2.6.18"
   val akkaHttpV = "10.2.1"
 
   Seq(
@@ -45,10 +45,10 @@ publishTo in ThisBuild := {
 scmInfo := Some(
   ScmInfo(
     url("https://github.com/TeamWanari/web-push"),
-    "scm:git:git@github.com:TeamWanari/web-push.git"
-  )
+    "scm:git:git@github.com:TeamWanari/web-push.git",
+  ),
 )
 
 developers := List(
-  Developer("Csabi", "Csaba Pálfi", "csibcsab@wanari.com", url("https://www.wanari.com"))
+  Developer("Csabi", "Csaba Pálfi", "csibcsab@wanari.com", url("https://www.wanari.com")),
 )
