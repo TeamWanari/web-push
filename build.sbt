@@ -15,7 +15,7 @@ libraryDependencies ++= {
     "com.typesafe.akka"         %% "akka-stream-testkit" % akkaV % Test,
     "com.typesafe.akka"         %% "akka-http"           % akkaHttpV,
     "com.typesafe.akka"         %% "akka-http-testkit"   % akkaHttpV % Test,
-    "org.scalatest"             %% "scalatest"           % "3.3.0-SNAP2" % Test,
+    "org.scalatest"             %% "scalatest"           % "3.3.0-SNAP4" % Test,
     "com.github.tomakehurst"    % "wiremock"             % "2.27.2" % Test,
   )
 }
@@ -45,10 +45,10 @@ publishTo in ThisBuild := {
 scmInfo := Some(
   ScmInfo(
     url("https://github.com/TeamWanari/web-push"),
-    "scm:git:git@github.com:TeamWanari/web-push.git"
-  )
+    "scm:git:git@github.com:TeamWanari/web-push.git",
+  ),
 )
 
 developers := List(
-  Developer("Csabi", "Csaba Pálfi", "csibcsab@wanari.com", url("https://www.wanari.com"))
+  Developer("Csabi", "Csaba Pálfi", "csibcsab@wanari.com", url("https://www.wanari.com")),
 )
